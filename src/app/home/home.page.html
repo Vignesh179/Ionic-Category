@@ -10,7 +10,7 @@
 <div class="container">
   <form>
     <label>Name</label>
-    <input type="text" class="form-control" name="name">
+    <input type="text" class="form-control" [(ngModel)]="categoryName" name="name">
     <label>Description</label>
     <textarea class="form-control">
 
@@ -23,10 +23,10 @@
     <br>
     <button class="btn btn-success">Save</button> &nbsp;<button class="btn btn-danger">Reset</button>
   </form>
-  
 </div>
 <div class="container">
   <table></table>
 </div>
+{{categoryName}}
 
 </ion-content>
