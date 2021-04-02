@@ -7,26 +7,77 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-<div class="container">
-  <form>
-    <label>Name</label>
-    <input type="text" class="form-control" [(ngModel)]="categoryName" name="name">
-    <label>Description</label>
-    <textarea class="form-control">
-
-    </textarea>
-    <label>Status</label>
-    <select class="form-control"> 
-      <option>Active</option>
-      <option>Inactive</option>
-    </select>
-    <br>
-    <button class="btn btn-success">Save</button> &nbsp;<button class="btn btn-danger">Reset</button>
-  </form>
-</div>
-<div class="container">
-  <table></table>
-</div>
-{{categoryName}}
+  <div class="container">
+    
+      
+        <div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Record saved Successfully!</strong>
+          <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div *ngIf="updateMessage" class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Record Updated Successfully!</strong>
+          <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form [formGroup]="categoryForm">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control"  placeholder="Enter Name"
+              [(ngModel)]="categoryName" required>
+          </div>
+        </form>
+        <div class="form-group">
+          <label>Status</label>
+          <select [(ngModel)]="categoryStatus" required class="form-control">
+            <option>Active</option>
+            <option>Inactive</option>
+          </select>
+          <label>Description</label>
+          <input type="text" [(ngModel)]="categoryDate" class="form-control" required>
+  <!-- 
+          <label>In-time</label>
+          <input type="time" [(ngModel)]="categoryinTime"class="form-control" required>
+  
+          <label>Out-time</label>
+          <input type="time" [(ngModel)]="categoryoutTime" class="form-control" required> -->
+        </div>
+        <button *ngIf="SaveButton" (click)="saveCategory()" [disabled]="categoryName === '' || categoryStatus.invalid"
+          class="btn btn-success btn-md">Save</button>&nbsp;
+        <button *ngIf="UpdateButton" (click)="updateCategory()" class="btn btn-warning btn-md">Update</button>&nbsp;
+        <button (click)="resetForm()" class="btn btn-danger btn-md">Reset</button>
+    
+      
+        <table class="table table-striped table-bordered responsive">
+          <thead class="table table-dark">
+            <tr>
+              <th>ID</th>
+              <th>NAME</th>
+              <th>DATE</th>
+              <!-- <th>IN-TIME</th>
+              <th>OUT-TIME</th> -->
+              <th>STATUS</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tr *ngFor="let category of categories">
+            <td>{{category.id}}</td>
+            <td>{{category.name}}</td>
+            <td>{{category.date | date:"dd-MM-yyyy"}}</td>
+            <!-- <td>{{category.intime}}</td>
+            <td>{{category.outtime}}</td> -->
+            <td>{{category.status}}</td>
+            <td>
+              <button (click)="editCategory(category)" class="btn btn-warning btn-sm">Edit</button>
+              &nbsp;
+              <button (click)="deleteCategory(category.id)" class="btn btn-danger btn-sm">Delete</button>
+            </td>
+          </tr>
+        </table>
+    
+    
+  </div>
 
 </ion-content>
